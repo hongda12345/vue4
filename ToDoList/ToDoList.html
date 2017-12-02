@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="ToDoList.css">
+	<script src="ToDoList.js"></script>
+	<script src="../vue.js"></script>
+</head>
+<body>
+	<header>
+		<section>
+			<form action="javascript:postaction()" id="form">
+				<label for="title">ToDoList</label>
+				<input type="text" id="title" name="title" placeholder="添加ToDo" required="required" autocomplete="off" />
+			</form>
+		</section>
+	</header>
+	<section>
+		<h2 onclick="save()">正在进行 <span id="todocount"></span></h2>
+		<ol id="todolist" class="demo-box">
+		</ol>
+		<h2>已经完成 <span id="donecount"></span></h2>
+		<ul id="donelist">
+		</ul>
+	</section>
+	<footer>
+		Copyright &copy; 2014 todolist.cn <a href="javascript:clear();">clear</a>
+	</footer>
+	<!-- <div id="app">
+		<header>
+			<div class="top">
+				<div class="title">ToDoList</div>
+			    <input type="text" class="add">
+			</div>
+		</header>
+		<ul class="doing">
+			<div class="title1">ToDoList</div>
+			<li v-for"v in filter['doing']">
+				<input type="checkbox" v-model="v['status']">
+				<input type="text" v-model="v">
+				<button @click="del(v['id'])">删除</button>
+			</li>
+		</ul>
+		<ul class="done">
+			<div class="title2"></div>
+			<li v-for"v in filter['done']">
+				<input type="checkbox" v-model="v['status']">
+				<input type="text" v-model="v">
+				<button @click="del(v['id'])">删除</button>
+			</li>
+		</ul>
+	</div> -->
+	<script>
+		/*arr=[
+            {id:1,content:'hongsa',status:true},
+            {id:2,content:'hongsa',status:true},
+            {id:3,content:'hongsa',status:true},
+            {id:4,content:'hongsa',status:true},
+            {id:5,content:'hongsa',status:true},
+		];*/
+		localStorage.todos=JSON.stringify(arr);
+		let app=new Vue({
+            el:"#app",
+            data:{
+            	todos:[
+                    
+            	]
+            },
+            computed:{
+                filter(){
+                	let data={doing:[],done:[]};
+                	return data;
+                },
+            },
+            mounted(){
+            	this.todos=JSON.parse(localStorage.todos);
+            }
+		})
+	</script>
+</body>
+</html>

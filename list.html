@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<ul>
+			<li v-for="(v,i) in todos">
+			    {{v}}---{{i}};
+		    </li>
+		</ul>
+		<ul>
+			<li v-for="(value, key, index) in object">
+				{{ index }}. {{ key }}: {{ value }}
+			</li>
+		</ul>
+	</div>
+	<script>
+		let app=new Vue({
+            el:'#app',
+            data:{
+            	todos:[
+                    '戴着墨镜',
+                    '开着车',
+            	],
+            	object:{
+                name:'hongsa',
+                age:20,
+                sex:'男'
+                }
+            },
+            methods:{
+            	add(){
+            		this.todos.push('算了吧');
+            	},
+            	filter(){
+                    this.todos.filter((value,index)=>{index>0})
+            	}
+            }
+		})
+	</script>
+</body>
+</html>

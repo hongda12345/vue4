@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="../vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<header>
+		    <h2>ToDoList</h2>
+		    <input type="text" @keydown.enter="add" v-model="message">
+	    </header>
+	    <section>
+		    <h2>正在进行<span>{{filter.doing.length}}</span></h2>
+		    <ul>
+			    <li v-for="v in filter.doing">
+				    <input type="checkbox" v-model="v.status">
+				    <input type="text" v-model="v.content">
+				    <button @click="del(v.id)">X</button>
+			    </li>
+		    </ul>
+		    <h2>已经完成<span>{{filter.done.length}}</span></h2>
+		    <ul>
+			    <li v-for="v in filter.done">
+				    <input type="checkbox" v-model="v.status">
+				    <input type="text" v-model="v.content">
+				    <button @click="del(v.id)">X</button>
+			    </li>
+		    </ul>
+	    </section>
+	</div>
+	<script>
+		let arr=[
+            {id:1,content:'正在进行的1',status:false},
+            {id:2,content:'已经完成的1',status:true},
+            {id:3,content:'正在进行的2',status:false},
+            {id:4,content:'已经完成的2',status:true},
+            {id:5,content:'正在进行的3',status:false}
+		];
+		// localStorage.todos=JSON.stringify(arr);
+		let app=new Vue({
+            el:"#app",
+            data:{
+            	todos:[
+                   
+            	],
+            	lastid:0,
+            	message:'',
+            },
+            computed:{
+                filter(){
+                	let data={doing:[],done:[]};
+                	data.done=this.todos.filter(ele=>ele.status);
+                	data.doing=this.todos.filter(ele=>!ele.status);
+                	// this.save();
+                	return data;
+                }
+            },
+            watch:{
+
+            },
+            methods:{
+            	save(){
+            		localStorage.todos=JSON.stringify(this.todos);
+            	},
+            	del(ids){
+                    this.todos=this.todos.filter(element=>element.id!=ids);
+            	},
+            	add(e){
+                    if(e.keyCode==13){
+                    	this.todos.push({id:++this.lastid,content:this.message,status:false});
+                    	this.message='';
+                    }
+            	}
+            },
+            mounted(){
+            	this.todos=JSON.parse(localStorage.todos);
+            	this.lastid=this.todos[this.todos.length-1].id;
+            }
+        });
+        app.$watch('todos',function(){
+        	localStorage.todos=JSON.stringify(this.todos);
+        },{deep:true})
+	</script>
+</body>
+</html>

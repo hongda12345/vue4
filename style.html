@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="vue.js"></script>
+</head>
+<style>
+	.info{
+		background: yellow;
+	}
+	.warning{
+		background: orangered;
+	}
+	.red{
+		color: blue;
+	}
+	[id*=box]{
+		width: 300px;
+		height: 300px;
+	}
+</style>
+<body>
+	<div id="app">
+		<div id="box" v-bind:class='info'></div>
+		<div id="box1" v-bind:class='{info:flag}'></div>
+		<div id="box2" v-bind:class='{warning:flag,red:isRed}'>
+			hongsa
+		</div>
+		<div id="box2" v-bind:class='styleObj'></div>
+		<div id="box3":class="[info,isRed]"></div>
+		<div id="box4" :style='{width:w,height:h,background:bg}'></div>
+		<div id="box5" :style='[styleObj1]'></div>
+	</div>
+	<script>
+		let app=new Vue({
+			el:"#app",
+			data:{
+                info:'warning',
+                flag:true,
+                isRed:true,
+                styleObj:{warning:true,red:true},
+                w:'100px',
+                h:'100px',
+                bg:'blue',
+                styleObj1:{
+                	width:'200px',
+                    height:'200px',
+                    background:'hotpink',
+                }
+			}
+		})
+	</script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<input type="text" v-model="name">
+		{{age}}
+		<!-- {{phone}} -->
+		<!-- {{sex}} -->
+		<div v-html="html"></div>
+		<button v-on:click="alert">事件</button>
+		<button @click="count+=1">{{count}}</button>
+		<button @click="toUpperCase">大小写</button>
+		<!-- {{name.toUpperCase()}} -->
+		{{num+1}}
+	    <div @click='greet'>greet</div>
+	    {{age>=18?'yes':'no'}}
+	    <div v-if="flag">hongsa</div>
+	    <div v-show="flag">hongsa</div>
+	    <button @click="flag=!flag">显示与隐藏</button>
+	</div>
+</body>
+<script>
+		// let data={name:'hongsa',age:20};
+		// data.phone=123456;
+		let app=new Vue({
+			el:'#app',
+			data:{  //放数据
+				num:10,
+				name:'hongsa',
+				age:20,
+				html:'<b>加粗</b>',
+				arr:[1,2,3,4,5,6],
+				count:0,
+				flag:true
+			},
+			methods:{  //放方法
+				alert(){
+					alert(1);
+				},
+				greet(){
+					console.log(this.name);
+				},
+				toUpperCase(){
+					this.toUpperCase();
+				}
+			}
+		})
+		console.log(app);
+;		// data.sex='男';不支持在new后面
+</script>
+</html>

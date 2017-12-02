@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="vue.js"></script>
+</head>
+<style>
+	*{
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+	html,body{
+		width: 100%;
+		height: 100%;
+		background: #fff;
+	}
+	body{
+		overflow: hidden;
+	}
+	header{
+		width: 100%;
+		height: 60px;
+		background: #000;
+		text-align: center;
+		line-height: 60px;
+		color: #fff;
+	}
+	section{
+		width: 100%;
+		/* height: calc(100% - 60px); */
+		background: skyblue;
+		position: absolute;
+		top: 60px;
+		bottom: 0;
+	}
+	.list{
+		width: 150px;
+		height: 300px;
+		position: absolute;
+		box-sizing: border-box;
+	}
+	.list h1{
+		padding: 5px;
+		color: #fff;
+		font-size: 14px;
+		text-align: center;
+		height: 20px;
+		line-height: 20px;
+	}
+	.list span{
+		float: right;
+		cursor: pointer;
+	}
+	.list textarea{
+		border: none;
+		outline: none;
+		width: 100%;
+		height: calc(100% - 20px);
+		margin-left: -1px;
+		resize: none;
+	}
+	button{
+		width: 100%;
+		color: #fff;
+		outline: none;
+		border: none;
+	    cursor: pointer;
+	    border-radius: 3px;
+	    padding: 2px 0;
+	}
+	.active{
+		z-index: 999;
+	}
+</style>
+<body>
+	<div id="app">
+		<header>
+			<h1>备忘录</h1>
+		</header>
+	    <section @dblclick="add">
+		    <notes v-for="(item,index) in notes" :key="item.id" :msg="item" v-on:schange="update" v-on:delete="del"></notes>
+	    </section>
+	</div>
+	<script>
+		let arr=[
+            {id:1,content:'天亮了',color:'#ff318e',x:100,y:90,type:'生活'},
+            {id:2,content:'天晴了',color:'#ff6700',x:300,y:150,type:'生活'},
+            {id:3,content:'天黑了',color:'#19ABDF',x:500,y:90,type:'生活'},
+            {id:4,content:'天阴了',color:'#E00DB5',x:700,y:150,type:'生活'},
+            {id:5,content:'天塌了',color:'#04B30F',x:900,y:90,type:'生活'},
+		];
+		localStorage.notes=JSON.stringify(arr);
+		Vue.component('notes',{
+			props:['msg'],
+			data:function(){
+                return{
+                	smsg: Object.assign({},this.msg)
+                }
+			},
+			template:`
+			<div class="list" v-bind:style="{left:smsg.x+'px',top:smsg.y+'px',border:'1px solid'+smsg.color}" v-on:click="toTop">
+            <h1 v-bind:style="{background:smsg.color}">{{smsg.type}}<span @click.stop="del">×</span></h1>
+            <textarea v-model="smsg.content" v-bind:style="{border:'1px solid'+smsg.color}"></textarea>
+            <button @click="smsg.x+=10" v-bind:style="{background:smsg.color}">点击</button>
+			</div>
+			`,
+			methods:{
+                del(){
+                	console.log(this.smsg.id);
+                	this.$emit('delete',this.smsg.id);
+                },
+                toTop(){
+                	this.$emit('click',this.smsg.id);
+                }
+			},
+			watch:{
+				'smsg':{
+					handler:function(v,oldv){
+                        this.$emit('schange',this.smsg);
+					},
+					deep:true
+				}
+			}
+        });
+        /*Vue.directive('drag',function(){
+            var oDiv=this.el;
+            oDiv.onmousedown=function(ev){
+                var disX=ev.clientX-oDiv.offsetLeft;
+                var disY=ev.clientY-oDiv.offsetTop;
+            document.onmousemove=function(ev){
+                var l=ev.clientX-disX;
+                var t=ev.clientY-disY;
+                oDiv.style.left=l+'px';
+                oDiv.style.top=t+'px';
+            };
+            document.onmouseup=function(){
+                document.onmousemove=null;
+                document.onmouseup=null;
+            };
+        };
+        });*/
+        let app=new Vue({
+        	el:'#app',
+        	data:{
+        		notes:[],
+        		type:['生活','学习','娱乐'],
+        	},
+        	methods:{
+                update(v){
+                	event.cancelBubble = true;
+                	let index=0;
+                    this.notes.forEach((element,i)=>{
+                    	if(element.id==v.id){
+                    		index=i;
+                    	}
+                    });
+                    this.notes.splice(index,1,v);
+                },
+                del(ids){
+                	event.cancelBubble = true;
+                    this.notes=this.notes.filter(element=>element.id!=ids);
+                },
+                add(e){
+                	event.cancelBubble = true;
+                	let id=this.notes[this.notes.length-1];
+                	let x=e.clientX;
+                	let y=e.clientY;
+                	let color=`rgb(${Math.floor(Math.random()*256)},${Math.floor(Math.random()*256)},${Math.floor(Math.random()*256)})`;
+                	let type=this.type[Math.floor(Math.random()*this.type.length)];
+                	let obj={id,content:'',color,x,y,type};
+                	this.notes.push(obj);
+                },
+                toTop(ids){
+                    this.notes=this.notes.addClass('active');
+                }
+
+        	},
+        	mounted(){
+        	    this.notes=JSON.parse(localStorage.notes);
+        	},
+        	watch:{
+        		'notes':{
+        		    handler:function(){
+                        localStorage.notes=JSON.stringify(this.notes);
+        		    },
+        		    deep:true
+        		}
+        	}
+        })
+	</script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<input type="text" v-model="name">
+		{{name}}
+		<textarea v-model="text">
+		{{text}}
+		</textarea>
+	</div>
+	<script>
+		let data={
+			name:'hongsa',
+			text='这是一个文本'
+		};
+		let app=new Vue({
+			el:'#app',
+			data:data
+		})
+
+	</script>
+</body>
+</html>

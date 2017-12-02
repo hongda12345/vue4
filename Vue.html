@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<input type="text" value="hongsa">
+	<div>
+		hongsa
+	</div>
+	<script>
+	/*let input=document.querySelector('input');
+    let div=document.querySelector('div');
+    let data=input.value;
+    data='lisi';
+    input.oninput=function(){
+    	div.innerText=this.value;
+    	data=this.value;
+    }*/
+    //脏值检测
+    //数据劫持
+    let data={
+
+    }
+    Object.defineProperty(data,'name',{
+        enumerable:true,
+        configurable:false,
+        set:function(){
+
+        },
+        get:function(){
+
+        }
+    })
+    <script>
+	/*let input=document.querySelector('input');
+    let div=document.querySelector('div');
+    let data=input.value;
+    data='lisi';
+    input.oninput=function(){
+    	div.innerText=this.value;
+    	data=this.value;
+    }*/
+    //脏值检测
+    //数据劫持
+    let data={
+
+    }
+    Object.defineProperty(data,'name',{
+        enumerable:true,
+        configurable:false,
+        set:function(){
+
+        },
+        get:function(){
+
+        }
+    })
+</script></script>
+</body>
+</html>

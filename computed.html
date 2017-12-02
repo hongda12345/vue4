@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		{{num1}}
+		{{num2}}
+		<br>
+		<input type="text" v-model="num1">
+		<input type="text" v-model="num2">
+		{{num1*1+num2*1}}
+		<br>
+		{{sum}}
+	    {{sum1()}}
+	    <br>
+	    {{message.toUpperCase()}}
+	    {{upCase}}
+	    <br>
+	    <button @click="alert">求和</button>
+	    <button @click="sum1">求和</button>
+	    <br>
+	    {{now}}
+	    {{next()}}
+	    <button @click="update">更新</button>
+	    <br>
+	    <button @click="num1+=1">{{num1}}</button>
+	    {{count}}
+	    {{sum}}
+	</div>
+	<script>
+		let app=new Vue({
+			el:'#app',
+			data:{
+				num1:10,
+				num2:20,
+				message:'hello world',
+				nextt:Date.now(),
+				count:30
+			},
+			computed:{
+                sum(){
+                	return this.num1+this.num2;
+                },
+                upCase(){
+                    return this.message.toUpperCase();
+                },
+                now(){
+					return Date.now();
+				}
+			},
+			methods:{
+				alert(){
+                    console.log(this.sum);
+                    console.log(this.upCase);
+				},
+				sum1(){
+					return this.num1+this.num2;
+				},
+				next(){
+					return Date.now();
+				},
+				update(){
+					console.log(this.next());
+					console.log(this.now);
+				}
+			},
+			/*watch:{
+				num1:function(v,oldv){
+					this.count=this.num1+this.num2;
+                    console.log(v,oldv);
+				}
+			}*/
+		})
+	</script>
+</body>
+</html>

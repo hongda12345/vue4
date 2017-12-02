@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<input type="text" v-model='type'>
+		<div v-if="type=='username'">
+			username:<input type="text" key="username-input">
+		</div>
+		<div v-else>
+			password:<input type="text" key="password-input">
+		</div>
+		<!-- <div v-if='flag'>
+			<h2>单选题</h2>
+			<p>arr是否是一个对象</p>
+		</div>
+		<div v-else>
+			<h2>对象选题</h2>
+			<p>arr是一个对象</p>
+			<p>arr不是一个对象</p>
+		</div> -->
+	</div>
+	<script>
+		let app=new Vue({
+            el:'#app',
+            data:{
+            	flag:false,
+            	type:'username',
+            }
+		})
+	</script>
+</body>
+</html>
